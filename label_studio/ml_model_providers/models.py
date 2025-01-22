@@ -41,23 +41,19 @@ class ModelProviderConnectionScopes(models.TextChoices):
 
 class ModelProviderConnection(models.Model):
 
-    # DEPRECATED in favor of provider_choice
     provider = models.CharField(
         max_length=255,
-        choices=ModelProviders.choices,
-        default=ModelProviders.OPENAI,
-        help_text='Deprecated in favor of provider_choice',
+        default=ModelProviderChoices.OPENAI.name,
+        help_text='Model provider name',
         editable=False,
     )
-
-    provider_choice = models.CharField(max_length=255, null=True, blank=True, help_text='Model provider name')
 
     @property
     def get_provider_config(self) -> Optional[ModelProviderConfig]:
         try:
-            return ModelProviderChoices[self.provider_choice]
+            return ModelProviderChoices[self.provider]
         except KeyError:
-            logger.error(f'Provider {self.provider_choice} not found in ModelProviderConnection {self.id}')
+            logger.error(f'Provider {self.provider} not found in ModelProviderConnection {self.id}')
             return None
 
     api_key = models.TextField(_('api_key'), null=True, blank=True, help_text='Model provider API key')

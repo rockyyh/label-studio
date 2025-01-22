@@ -5,7 +5,7 @@ import logging
 from django.conf import settings
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from ml_model_providers.models import ModelProviderConnection, ModelProviders
+from ml_model_providers.models import ModelProviderChoices, ModelProviderConnection
 from projects.models import Project
 from rest_framework.exceptions import ValidationError
 from tasks.models import Annotation, FailedPrediction, Prediction, PredictionMeta
@@ -88,9 +88,8 @@ class ModelVersion(models.Model):
 class ThirdPartyModelVersion(ModelVersion):
     provider = models.CharField(
         max_length=255,
-        choices=ModelProviders.choices,
-        default=ModelProviders.OPENAI,
-        help_text='Deprecated in favor of model_provider_connection.provider_choice',
+        default=ModelProviderChoices.OPENAI.name,
+        help_text='Deprecated in favor of model_provider_connection.provider',
     )
 
     provider_model_id = models.CharField(
