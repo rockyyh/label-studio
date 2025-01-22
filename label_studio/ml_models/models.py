@@ -90,7 +90,7 @@ class ThirdPartyModelVersion(ModelVersion):
         max_length=255,
         choices=ModelProviders.choices,
         default=ModelProviders.OPENAI,
-        help_text='The model provider to use e.g. OpenAI',
+        help_text='Deprecated in favor of model_provider_connection.provider_choice',
     )
 
     provider_model_id = models.CharField(
