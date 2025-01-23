@@ -7,22 +7,27 @@ from enum import Enum
 # copy data as it existed at the time of the migration
 class ModelProviderConfig(BaseModel):
     litellm_slug: str
-    display_name: str
 
 
 class ModelProviderChoices(Enum):
-    OPENAI = ModelProviderConfig(litellm_slug="openai", display_name="OpenAI")
-    AZURE_OPENAI = ModelProviderConfig(litellm_slug="azure", display_name="AzureOpenAI")
-    VERTEX_AI = ModelProviderConfig(litellm_slug="vertex_ai", display_name="VertexAI")
-    CUSTOM = ModelProviderConfig(litellm_slug="openai", display_name="Custom")
+    OPENAI = ModelProviderConfig(litellm_slug="openai")
+    AZURE_OPENAI = ModelProviderConfig(litellm_slug="azure")
+    VERTEX_AI = ModelProviderConfig(litellm_slug="vertex_ai")
+    CUSTOM = ModelProviderConfig(litellm_slug="openai")
     
+provider_choices = [
+   ('OpenAI', ModelProviderChoices.OPENAI.name),
+   ('AzureOpenAI', ModelProviderChoices.AZURE_OPENAI.name),
+   ('VertexAI', ModelProviderChoices.VERTEX_AI.name),
+   ('Custom', ModelProviderChoices.CUSTOM.name),
+]
 # specify how to map data across the migration
 def copy_provider_to_provider_choice(apps, schema_editor):
     ModelProviderConnection = apps.get_model('ml_model_providers', 'ModelProviderConnection')
-    provider_to_choice_dct = {c.value.display_name: c.name for c in ModelProviderChoices}
+    dct = {p[0]: p[1] for p in provider_choices}
     for connection in ModelProviderConnection.objects.all():
         try:
-            connection.provider = provider_to_choice_dct[connection.provider]
+            connection.provider = dct[connection.provider]
             connection.save()
         except KeyError:
             pass
@@ -30,10 +35,10 @@ def copy_provider_to_provider_choice(apps, schema_editor):
 
 def copy_provider_choice_to_provider(apps, schema_editor):
     ModelProviderConnection = apps.get_model('ml_model_providers', 'ModelProviderConnection')
+    dct = {p[1]: p[0] for p in provider_choices}
     for connection in ModelProviderConnection.objects.all():
         try:
-            config = ModelProviderChoices[connection.provider].value
-            connection.provider = config.display_name
+            connection.provider = dct[connection.provider]
             connection.save()
         except KeyError:
             pass

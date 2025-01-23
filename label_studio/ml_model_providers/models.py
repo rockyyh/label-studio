@@ -22,15 +22,14 @@ class ModelProviders(models.TextChoices):
 
 class ModelProviderConfig(BaseModel):
     litellm_slug: str
-    display_name: str
 
 
 class ModelProviderChoices(Enum):
-    OPENAI = ModelProviderConfig(litellm_slug='openai', display_name='OpenAI')
-    AZURE_OPENAI = ModelProviderConfig(litellm_slug='azure', display_name='AzureOpenAI')
-    VERTEX_AI = ModelProviderConfig(litellm_slug='vertex_ai', display_name='VertexAI')
-    CUSTOM = ModelProviderConfig(litellm_slug='openai', display_name='Custom')
-    GEMINI = ModelProviderConfig(litellm_slug='gemini', display_name='Gemini')
+    OPENAI = ModelProviderConfig(litellm_slug='openai')
+    AZURE_OPENAI = ModelProviderConfig(litellm_slug='azure')
+    VERTEX_AI = ModelProviderConfig(litellm_slug='vertex_ai')
+    CUSTOM = ModelProviderConfig(litellm_slug='openai')
+    GEMINI = ModelProviderConfig(litellm_slug='gemini')
 
 
 class ModelProviderConnectionScopes(models.TextChoices):
