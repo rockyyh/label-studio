@@ -1,0 +1,62 @@
+<View style="display: flex;">
+  <!-- Left side -->
+  <View style="flex: 70%;font-size: 18px;">
+    <Header value="Source"/>
+    <View style="background: #dddddd"><Text name="src" value="$src" /></View>
+    <Header value="Candidate A"/>
+    <View style="background: #dddddd"><Text name="candidate1" value="$candidate1"/></View>
+    <Header value="Candidate B"/>
+    <View style="background: #dddddd"><Text name="candidate2" value="$candidate2"/></View>
+    <!-- Notice for annotation -->
+    <Header value="Notice (etc. MQM)"/> <!-- can be replaced by $Notice/$Notice1/$Sentence1 like that -->
+    <Collapse bordered="false" accordion="true">
+      <Panel value="Terminology">
+        <View>
+          <View style="font-weight: bold;"><Text name="Notice1A" value = "Terminology"/></View>
+	      <Text name="Notice1A-i" value = "errors arising when a term does not conform to normative domain or organizational terminology standards or when a term in the target text is not the correct, normative equivalent of the corresponding term in the source text"/>
+        </View>
+      </Panel>
+      <Panel value="MQM">
+        <View>
+          <View  style="font-weight: bold;"><Text name="Notice2A" value = "Terminology"/></View>
+	      <Text name="Notice2A-i" value = "errors occurring when the target text does not accurately correspond to the propositional content of the source text, introduced by distorting, omitting, or adding to the message"/>
+          <View  style="font-weight: bold;"><Text name="Notice2B" value = "Accuracy"/></View>
+          <Text name="Notice2A-ii" value = "errors occurring when the target text does not accurately correspond to the propositional content of the source text, introduced by distorting, omitting, or adding to the message"/>
+          <View style="font-weight: bold;"><Text name="Notice2C" value = "Header"/></View>
+          <Text name="Notice2A-iiii" value = "sentence"/>
+        </View>
+      </Panel>
+    </Collapse>
+  </View>
+  
+  <!-- Right side -->
+  <View style="flex: 30%; margin-left: 1em"> 
+    <Header value="Compare I" /> <!-- can be replaced by $compare1 -->
+    <Choices name="Compare I" toName="src" choice="single" showInLine="true">
+      <Choice value="A&gt;B" hotkey="1"/>
+      <Choice value="A&lt;B" hotkey="2"/>
+      <Choice value="A≈B" hotkey="3"/>
+    </Choices>
+    <Header value="Compare II" /> <!-- can be replaced by $compare2 -->
+    <Choices name="Compare II" toName="src" choice="single" showInLine="true">
+      <Choice value="A&gt;B" hotkey="q"/>
+      <Choice value="A&lt;B" hotkey="w"/>
+      <Choice value="A≈B" hotkey="e"/>
+    </Choices>
+  </View>
+</View>
+
+<!-- {"data": [
+    {
+        "src": "I like cat.",
+		    "candidate1": "我喜欢猫。",
+		    "candidate2": "我不喜欢猫。"
+    },
+    {
+        "src": "I want to be ",
+		    "candidate1": "a scientist.",
+		    "candidate2": "a dog."
+    }
+]
+}
+-->
