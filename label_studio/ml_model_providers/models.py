@@ -45,7 +45,8 @@ class ModelProviderConnection(models.Model):
         max_length=255,
         default=ModelProviderChoices.OPENAI.name,
         help_text='Model provider name',
-        editable=False,
+        # TODO: should set this, but it breaks the serializer - provider no longer appears
+        # editable=False,
     )
 
     @property

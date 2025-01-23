@@ -54,7 +54,6 @@ class Migration(migrations.Migration):
             name="provider",
             field=models.CharField(
                 default="OPENAI",
-                editable=False,
                 help_text="Model provider name",
                 max_length=255,
             ),
